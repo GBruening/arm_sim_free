@@ -1,12 +1,12 @@
 %% Drive to theta
-function [theta] = drive_to_theta(act,...
-                                  muscles,...
-                                  theta,...
-                                  forearm,...
-                                  upperarm,...
-                                  elbow,...
-                                  shoulder,...
-                                  vars)
+function [theta, muscles] = drive_to_theta(act,...
+                                           muscles,...
+                                           theta,...
+                                           forearm,...
+                                           upperarm,...
+                                           elbow,...
+                                           shoulder,...
+                                           vars)
 %[~] = Forward_dynamics_check(muscles,theta,forearm.,upperarm.,elbow,shoulder)
 
 muscle_nums = {'an','bs','br','da','dp','pc','bb','tb'};
@@ -20,6 +20,11 @@ for k = 1:length(muscle_nums)
 
     stress(k) = Fl_Fv_for(norm_length(k),vel(k),a)*norm_force;
     force(k) = stress(k)*muscles.(muscle_nums{k}).pcsa;
+    
+    muscles.(muscle_nums{k}).force = ...
+        [muscles.(muscle_nums{k}).force, force(k)];
+    muscles.(muscle_nums{k}).stress = ...
+        [muscles.(muscle_nums{k}).stress, stress(k)];
 end
 
 A1 = [muscles.an.m_arm_e(end),...
@@ -86,7 +91,22 @@ theta.Edd = [theta.Edd, qdd(2)];
 theta.Sd = [theta.Sd, theta.Sd(end) + theta.Sdd(end)*vars.time_inc];
 theta.Ed = [theta.Ed, theta.Ed(end) + theta.Edd(end)*vars.time_inc];
 
-theta.S = [theta.S, theta.S(end) + theta.Sd(end)*vars.time_inc];
-theta.E = [theta.E, theta.E(end) + theta.Ed(end)*vars.time_inc];
+e_s = theta.S(end) + theta.Sd(end)*vars.time_inc;
+if e_s < deg2rad(-45)
+    theta.S = [theta.S, deg2rad(-45)];
+elseif e_s > deg2rad(135)
+    theta.S = [theta.S, deg2rad(135)];
+else
+    theta.S = [theta.S, theta.S(end) + theta.Sd(end)*vars.time_inc];
+end
+
+e_f = theta.E(end) + theta.Ed(end)*vars.time_inc;
+if e_f < deg2rad(3)
+    theta.E = [theta.E, deg2rad(3)];
+elseif e_f > deg2rad(177)
+    theta.E = [theta.E, deg2rad(177)];
+else
+    theta.E = [theta.E, theta.E(end) + theta.Ed(end)*vars.time_inc];
+end
 
 end

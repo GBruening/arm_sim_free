@@ -1,4 +1,4 @@
-function [error,out] = ga_arm_sim(x)
+function [error,out] = ga_arm_sim(x,animate)
 x = x*1e-6;
 x = reshape(x,[18,8]);
 format long
@@ -15,7 +15,7 @@ input.tar_rel_pos = [0.0707, 0.0707]; % Relative Target position in m
 % Initialize some variables. 
 vars.masses = input.added_mass;
 vars.rnjesus = 0;
-vars.time_inc = 0.010;
+vars.time_inc = 0.0050;
 vars.speeds = input.movedur; % Movement Duration
 vars.norm_force = input.normforce;
 vars.minparam = 'drive2';
@@ -51,21 +51,15 @@ rf = [vars.target(1)+ro(1),...
 
 [ muscles, act] = calc_muscle_initvars(vars,theta);
 
-% m = (.00001).*rand(18,8);
-
-% x=.01;
-% for x = .01:.01:.10
-%     theta = calc_theta(ro(1)+x,ro(2)+x,forearm,upperarm,theta);
-% 
-%     [muscles] = calc_muscle_l_v(theta, muscles);
-% end
 u = [];
 elbow.torque_c = [];
 shoulder.torque_c = [];
 
-% figure(1);
+if animate
+    figure(1);
+end
 while time<3
-    theta = drive_to_theta(act,...
+    [theta, muscles] = drive_to_theta(act,...
                            muscles,...
                            theta,...
                            forearm,...
@@ -84,22 +78,24 @@ while time<3
     
     time = time + vars.time_inc;
     
-%     % Animating it
-%     clf(1);hold on;
-%     xlim([-upperarm.length-forearm.length upperarm.length+forearm.length]);
-%     ylim([-upperarm.length-forearm.length upperarm.length+forearm.length]);
-%     x1 = upperarm.length * cos(theta.S(end));
-%     
-%     y1 = upperarm.length * sin(theta.S(end));
-%     
-%     x2 = upperarm.length * cos(theta.S(end)) + ...
-%         forearm.length * cos(theta.S(end)+theta.E(end));
-%     
-%     y2 = upperarm.length * sin(theta.S(end)) + ...
-%         forearm.length * sin(theta.S(end)+theta.E(end));
-%     plot([0,x1],[0,y1], 'color', 'blue');
-%     plot([x1,x2],[y1,y2], 'color', 'blue');
-%     drawnow;
+    if animate
+        % Animating it
+        clf(1);hold on;
+        xlim([.6*(-upperarm.length-forearm.length) .5*(upperarm.length+forearm.length)]);
+        ylim([-0.1 upperarm.length+forearm.length]);
+        x1 = upperarm.length * cos(theta.S(end));
+
+        y1 = upperarm.length * sin(theta.S(end));
+
+        x2 = upperarm.length * cos(theta.S(end)) + ...
+            forearm.length * cos(theta.S(end)+theta.E(end));
+
+        y2 = upperarm.length * sin(theta.S(end)) + ...
+            forearm.length * sin(theta.S(end)+theta.E(end));
+        plot([0,x1],[0,y1], 'color', 'blue');
+        plot([x1,x2],[y1,y2], 'color', 'blue');
+        drawnow;
+    end
 
     if sqrt((pos.x(end)-rf(1))^2+(pos.y(end)-rf(2))^2)<1e-5 &&...
             abs(theta.Sd(end)) < .01 && abs(theta.Ed(end)) < .01
@@ -111,6 +107,15 @@ out.muscles = muscles;
 out.theta   = theta;
 
 pos_error = sqrt((pos.x(end)-rf(1))^2+(pos.y(end)-rf(2))^2);
-error = pos_error + time;
+
+muscle_nums = {'an','bs','br','da','dp','pc','bb','tb'};
+force_tot = 0;
+for k = 1:8
+   force_tot = force_tot + sum(out.muscles.(muscle_nums{k}).force); 
+end
+out.pos_error = pos_error;
+out.force_tot = force_tot;
+
+error = pos_error*100000 + force_tot*0.0001;
 
 % animate_position;

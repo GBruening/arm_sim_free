@@ -88,16 +88,14 @@ function [ muscles, act ] = calc_muscle_initvars(vars,theta)
     
     for k = 1:length(muscle_nums) %1059.7 kg/m^3
         muscles.(muscle_nums{k}).m = muscles.(muscle_nums{k}).pcsa*muscles.(muscle_nums{k}).l0*1059.7;
-    end
-    
-    for k=1:length(muscle_nums)
-        muscles.(muscle_nums{k}).v(1,1) = 0;
-        act.(muscle_nums{k}) = 0;
-    end
-    
-    for k = 1:length(muscle_nums) %1059.7 kg/m^3
+        
+        muscles.(muscle_nums{k}).v(1,1)      = 0;
+        muscles.(muscle_nums{k}).force(1,1)  = 0;
+        muscles.(muscle_nums{k}).stress(1,1) = 0;
+        act.(muscle_nums{k})                 = 0;
+        
         muscles.(muscle_nums{k}).norm_length = ...
-        [muscles.(muscle_nums{k}).length(end)/muscles.(muscle_nums{k}).l0];
+            muscles.(muscle_nums{k}).length(end)/muscles.(muscle_nums{k}).l0;
     end
 end
 
