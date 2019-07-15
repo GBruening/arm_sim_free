@@ -23,7 +23,7 @@ animate = 0;
 animate = 0;
 [~,out] = ga_arm_sim(x,animate);
 
-save('free_arm_sim.mat','x','out');
+save('ps_arm_sim.mat','x','out');
 
 sprintf('Force tot: %0.3f',out.force_tot);
 sprintf('Pos Error: %0.3f',out.pos_error);

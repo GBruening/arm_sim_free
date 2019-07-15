@@ -1,0 +1,51 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2018 The MathWorks, Inc.
+                   R2018b (9.5.0.944444) 64-bit (glnxa64)
+                              August 28, 2018
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+Starting parallel pool (parpool) using the 'local' profile ...
+[Warning: The system time zone setting, 'US/Mountain', does not specify a single
+time zone unambiguously. It will be treated as 'America/Denver'. See the <a
+href="matlab:doc('datetime.TimeZone')">datetime.TimeZone property</a> for
+details about specifying time zones.] 
+[> In verifyTimeZone (line 34)
+  In datetime (line 543)
+  In parallel.internal.cluster.FileSerializer>iLoadDate (line 342)
+  In parallel.internal.cluster.FileSerializer/getFields (line 100)
+  In parallel.internal.cluster.CJSSupport/getProperties (line 260)
+  In parallel.internal.cluster.CJSSupport/getJobProperties (line 478)
+  In parallel.internal.cluster.CJSJobMixin/hGetProperty (line 85)
+  In parallel.internal.cluster.CJSJobMethods.setJobTerminalStateFromCluster (line 179)
+  In parallel.internal.cluster.CJSJobMixin/hSetTerminalStateFromCluster (line 116)
+  In parallel.cluster.CJSCluster/hGetJobState (line 401)
+  In parallel.internal.cluster.CJSJobMixin/getStateEnum (line 159)
+  In parallel.Job/get.StateEnum (line 238)
+  In parallel.Job/get.State (line 230)
+  In parallel.internal.customattr.CustomGetSet>iVectorisedGetHelper (line 128)
+  In parallel.internal.customattr.CustomGetSet>@(a,b,c)iVectorisedGetHelper(obj,a,b,c) (line 102)
+  In parallel.internal.customattr.CustomGetSet/doVectorisedGet (line 103)
+  In parallel.internal.customattr.CustomGetSet/hVectorisedGet (line 76)
+  In parallel.internal.customattr.GetSetImpl>iAccessProperties (line 322)
+  In parallel.internal.customattr.GetSetImpl>iGetAllPropertiesVec (line 264)
+  In parallel.internal.customattr.GetSetImpl.getImpl (line 133)
+  In parallel.internal.customattr.CustomGetSet>iHetFunGetFunction (line 154)
+  In parallel.internal.customattr.CustomGetSet>@(o)iHetFunGetFunction(o,props) (line 139)
+  In parallel.internal.cluster.hetfun (line 46)
+  In parallel.internal.customattr.CustomGetSet>iHetFunGetProperty (line 139)
+  In parallel.internal.customattr.CustomGetSet/get (line 38)
+  In parallel.internal.pool.InteractiveClient/pRemoveOldJobs (line 474)
+  In parallel.internal.pool.InteractiveClient/start (line 315)
+  In parallel.Pool>iStartClient (line 796)
+  In parallel.Pool.hBuildPool (line 585)
+  In parallel.internal.pool.doParpool (line 18)
+  In parpool (line 98)
+  In ps_script (line 4)
+  In run (line 91)] 
+connected to 20 workers.
+Optimization ended: relative change in the objective value 
+over the last OPTIONS.MaxStallIterations iterations is less than OPTIONS.FunctionTolerance.

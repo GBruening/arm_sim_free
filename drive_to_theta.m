@@ -108,5 +108,9 @@ elseif e_f > deg2rad(177)
 else
     theta.E = [theta.E, theta.E(end) + theta.Ed(end)*vars.time_inc];
 end
+if ~isreal(theta.E(end))
+    1;
+end
+    
 
 end

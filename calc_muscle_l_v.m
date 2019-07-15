@@ -27,6 +27,9 @@ function [muscles] = calc_muscle_l_v(theta, muscles)
         muscles.(muscle_nums{k}).norm_length =...
             [muscles.(muscle_nums{k}).norm_length,...
             muscles.(muscle_nums{k}).length(end)/muscles.(muscle_nums{k}).l0];
+        if ~isreal(muscles.(muscle_nums{k}).norm_length)
+            1;
+        end
     end
 
     time_step = 0.0025;

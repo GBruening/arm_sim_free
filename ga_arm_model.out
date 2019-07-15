@@ -31,63 +31,63 @@ connected to 24 workers.
 
                                   Best           Mean      Stall
 Generation      Func-count        f(x)           f(x)    Generations
-    1            20000       4.417e+04       5.872e+04        0
-    2            30000       4.417e+04       5.841e+04        0
-    3            40000       4.417e+04       5.753e+04        0
-    4            50000       4.297e+04       5.563e+04        0
-    5            60000       4.293e+04        5.33e+04        0
-    6            70000       4.155e+04       5.097e+04        0
-    7            80000       3.848e+04       4.898e+04        0
-    8            90000       3.841e+04       4.733e+04        0
-    9           100000       3.501e+04       4.583e+04        0
-   10           110000       3.342e+04       4.436e+04        0
-   11           120000       3.111e+04       4.281e+04        0
-   12           130000       3.108e+04        4.12e+04        0
-   13           140000       3.098e+04       3.954e+04        0
-   14           150000       2.775e+04        3.79e+04        0
-   15           160000       2.747e+04       3.658e+04        0
-   16           170000       2.693e+04       3.543e+04        0
-   17           180000        2.69e+04        3.43e+04        0
-   18           190000       2.678e+04       3.324e+04        0
-   19           200000       2.676e+04       3.241e+04        0
-   20           210000       2.667e+04       3.181e+04        0
-   21           220000       2.657e+04       3.135e+04        0
-   22           230000       2.652e+04       3.102e+04        0
-   23           240000       2.651e+04       3.083e+04        0
-   24           250000        2.65e+04       3.079e+04        0
-   25           260000       2.649e+04       3.067e+04        0
-   26           270000       2.649e+04       3.059e+04        0
-   27           280000       2.647e+04       3.052e+04        0
-   28           290000       2.645e+04       3.038e+04        0
-   29           300000       2.644e+04       3.025e+04        0
-   30           310000       2.643e+04       3.015e+04        0
+    1            20000          0.4417          0.5869        0
+    2            30000          0.4417          0.5839        0
+    3            40000          0.4264          0.5749        0
+    4            50000          0.4263          0.5558        0
+    5            60000          0.4108          0.5318        0
+    6            70000          0.3948          0.5073        0
+    7            80000          0.3743          0.4855        0
+    8            90000          0.3624           0.466        0
+    9           100000          0.3523           0.448        0
+   10           110000          0.3231          0.4313        0
+   11           120000          0.3222          0.4159        0
+   12           130000          0.3154          0.4021        0
+   13           140000          0.2906          0.3893        0
+   14           150000          0.2866          0.3766        0
+   15           160000          0.2851          0.3645        0
+   16           170000          0.2813          0.3519        0
+   17           180000          0.2806          0.3421        0
+   18           190000          0.2773          0.3351        0
+   19           200000          0.2762            0.33        0
+   20           210000           0.276          0.3263        0
+   21           220000           0.275          0.3234        0
+   22           230000          0.2749          0.3214        0
+   23           240000          0.2736          0.3197        0
+   24           250000          0.2735          0.3178        0
+   25           260000          0.2734          0.3177        0
+   26           270000          0.2732          0.3172        0
+   27           280000          0.2731          0.3167        0
+   28           290000          0.2729          0.3161        0
+   29           300000          0.2729          0.3155        0
+   30           310000          0.2728          0.3157        0
 
                                   Best           Mean      Stall
 Generation      Func-count        f(x)           f(x)    Generations
-   31           320000       2.643e+04       3.004e+04        0
-   32           330000       2.643e+04       2.991e+04        0
-   33           340000       2.643e+04       2.986e+04        0
-   34           350000       2.642e+04       2.975e+04        0
-   35           360000       2.642e+04       2.971e+04        0
-   36           370000       2.642e+04       2.964e+04        0
-   37           380000       2.642e+04        2.95e+04        0
-   38           390000       2.641e+04       2.941e+04        0
-   39           400000       2.641e+04       2.925e+04        0
-   40           410000       2.641e+04        2.91e+04        0
-   41           420000       2.641e+04       2.904e+04        0
-   42           430000        2.64e+04       2.893e+04        0
-   43           440000        2.64e+04       2.883e+04        0
-   44           450000        2.64e+04       2.873e+04        0
-   45           460000        2.64e+04       2.866e+04        0
-   46           470000        2.64e+04       2.864e+04        0
-   47           480000        2.64e+04       2.854e+04        0
-   48           490000       2.639e+04        2.85e+04        0
-   49           500000       2.639e+04       2.843e+04        0
-   50           510000       2.639e+04       2.835e+04        0
+   31           320000          0.2728          0.3157        0
+   32           330000          0.2727          0.3147        0
+   33           340000          0.2727          0.3143        0
+   34           350000          0.2727          0.3144        0
+   35           360000          0.2727          0.3133        0
+   36           370000          0.2726          0.3121        0
+   37           380000          0.2726          0.3112        0
+   38           390000          0.2725          0.3113        0
+   39           400000          0.2725          0.3106        0
+   40           410000          0.2725          0.3103        0
+   41           420000          0.2725          0.3097        0
+   42           430000          0.2724          0.3103        0
+   43           440000          0.2724          0.3108        0
+   44           450000          0.2724          0.3105        0
+   45           460000          0.2724          0.3099        0
+   46           470000          0.2724          0.3092        0
+   47           480000          0.2723          0.3081        0
+   48           490000          0.2723          0.3068        0
+   49           500000          0.2723           0.305        0
+   50           510000          0.2722          0.3032        0
 Optimization terminated: maximum number of generations exceeded.
 
 --------------------------------------------------------------------------------
-       Segmentation violation detected at Sat Jul 06 15:22:58 2019 -0600
+       Segmentation violation detected at Mon Jul 08 17:31:27 2019 -0600
 --------------------------------------------------------------------------------
 
 Configuration:
@@ -104,9 +104,9 @@ Configuration:
   MATLAB Version           : 9.5.0.944444 (R2018b)
   OpenGL                   : software
   Operating System         : Linux 3.10.0-957.21.3.el7.x86_64 #1 SMP Tue Jun 18 16:35:19 UTC 2019 x86_64
-  Process ID               : 144714
+  Process ID               : 137292
   Processor ID             : x86 Family 6 Model 63 Stepping 2, GenuineIntel
-  Session Key              : ac93389d-2b56-4340-ac23-a508baea9235
+  Session Key              : 1db8a403-ddd6-4f86-87e3-382c1888d6e5
   Static TLS mitigation    : Disabled: Unable to open display
   Window System            : No active display
 
@@ -117,40 +117,40 @@ Abnormal termination
 
 Register State (from fault):
   RAX = 0000000000000000  RBX = 0000000000000000
-  RCX = 00002b062c0005a8  RDX = 00002b0624018080
-  RSP = 00002b062bfff370  RBP = 00002b062bfff3c0
-  RSI = 00002b0624018080  RDI = 0000000000000000
+  RCX = 00002b0e240005a8  RDX = 00002b0e1c018080
+  RSP = 00002b0e23fff370  RBP = 00002b0e23fff3c0
+  RSI = 00002b0e1c018080  RDI = 0000000000000000
 
-   R8 = 00002b0624018080   R9 = 0000000000000000
-  R10 = 00002b0601d93600  R11 = 00002b07253b5c50
-  R12 = 00002b062bfff3e0  R13 = 00002b062bfff380
-  R14 = 00002b076bc3b0d0  R15 = 00002b062cbc4b30
+   R8 = 00002b0e1c018080   R9 = 0000000000000000
+  R10 = 00002b0df86e2600  R11 = 00002b103c00fd00
+  R12 = 00002b0e23fff3e0  R13 = 00002b0e23fff380
+  R14 = 00002b0f62487f30  R15 = 00002b0e1b502b30
 
-  RIP = 00002b0749348641  EFL = 0000000000010246
+  RIP = 00002b0f41a63641  EFL = 0000000000010246
 
    CS = 0033   FS = 0000   GS = 0000
 
 Stack Trace (from fault):
-[  0] 0x00002b0749348641                        bin/glnxa64/libmwhgutils.so+00620097 _ZN7hgutils17BaseObjectCOSInfo9getClientEv+00000001
-[  1] 0x00002b07489a576f                             bin/glnxa64/libmwhg.so+02504559
-[  2] 0x00002b07489c2a38                             bin/glnxa64/libmwhg.so+02624056
-[  3] 0x00002b07489c3cb7                             bin/glnxa64/libmwhg.so+02628791
-[  4] 0x00002b0748a17eb5                             bin/glnxa64/libmwhg.so+02973365
-[  5] 0x00002b0748b16478                             bin/glnxa64/libmwhg.so+04015224
-[  6] 0x00002b0748b770d9                             bin/glnxa64/libmwhg.so+04411609
-[  7] 0x00002b0600fd2a11                       bin/glnxa64/libmwservices.so+02996753
-[  8] 0x00002b0600fd3422                       bin/glnxa64/libmwservices.so+02999330
-[  9] 0x00002b0600fd3d3b                       bin/glnxa64/libmwservices.so+03001659 _Z25svWS_ProcessPendingEventsiib+00000187
-[ 10] 0x00002b0613b9b32c                            bin/glnxa64/libmwmcr.so+00709420
-[ 11] 0x00002b0613b9bb08                            bin/glnxa64/libmwmcr.so+00711432
-[ 12] 0x00002b0613b93d92                            bin/glnxa64/libmwmcr.so+00679314
-[ 13] 0x00002b06035d2dd5                             /lib64/libpthread.so.0+00032213
-[ 14] 0x00002b0601d52ead                                   /lib64/libc.so.6+01040045 clone+00000109
+[  0] 0x00002b0f41a63641                        bin/glnxa64/libmwhgutils.so+00620097 _ZN7hgutils17BaseObjectCOSInfo9getClientEv+00000001
+[  1] 0x00002b0f410c076f                             bin/glnxa64/libmwhg.so+02504559
+[  2] 0x00002b0f410dda38                             bin/glnxa64/libmwhg.so+02624056
+[  3] 0x00002b0f410decb7                             bin/glnxa64/libmwhg.so+02628791
+[  4] 0x00002b0f41132eb5                             bin/glnxa64/libmwhg.so+02973365
+[  5] 0x00002b0f41231478                             bin/glnxa64/libmwhg.so+04015224
+[  6] 0x00002b0f412920d9                             bin/glnxa64/libmwhg.so+04411609
+[  7] 0x00002b0df7921a11                       bin/glnxa64/libmwservices.so+02996753
+[  8] 0x00002b0df7922422                       bin/glnxa64/libmwservices.so+02999330
+[  9] 0x00002b0df7922d3b                       bin/glnxa64/libmwservices.so+03001659 _Z25svWS_ProcessPendingEventsiib+00000187
+[ 10] 0x00002b0e0a4ea32c                            bin/glnxa64/libmwmcr.so+00709420
+[ 11] 0x00002b0e0a4eab08                            bin/glnxa64/libmwmcr.so+00711432
+[ 12] 0x00002b0e0a4e2d92                            bin/glnxa64/libmwmcr.so+00679314
+[ 13] 0x00002b0df9f21dd5                             /lib64/libpthread.so.0+00032213
+[ 14] 0x00002b0df86a1ead                                   /lib64/libc.so.6+01040045 clone+00000109
 [ 15] 0x0000000000000000                                   <unknown-module>+00000000
 
-** This crash report has been saved to disk as /home/gabr0615/matlab_crash_dump.144714-1 **
+** This crash report has been saved to disk as /home/gabr0615/matlab_crash_dump.137292-1 **
 
 
 
 MATLAB is exiting because of fatal error
-/var/spool/slurmd/job2621368/slurm_script: line 20: 144714 Killed                  matlab -nodesktop -nodisplay -r 'clear; num_workers=$SLURM_NTASKS; run ga_script.m'
+/var/spool/slurmd/job2628826/slurm_script: line 20: 137292 Killed                  matlab -nodesktop -nodisplay -r 'clear; num_workers=$SLURM_NTASKS; run ga_script.m'

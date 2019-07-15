@@ -15,8 +15,12 @@ for k = 1:8
         t = t_deact;
     end
     a_dot = ((1+sig*eps)*u(k)-act.(muscle_nums{k})(end))/t;
-    act.(muscle_nums{k}) = [act.(muscle_nums{k}),...
-        act.(muscle_nums{k})(end) + vars.time_inc*a_dot];
+    if act.(muscle_nums{k})(end) + vars.time_inc*a_dot >= 0
+        act.(muscle_nums{k}) = [act.(muscle_nums{k}),...
+            act.(muscle_nums{k})(end) + vars.time_inc*a_dot];
+    else
+        act.(muscle_nums{k}) = [act.(muscle_nums{k}),0];
+    end
 end
 
 end
