@@ -30,11 +30,3 @@ details about specifying time zones.]
 connected to 22 workers.
 Optimization ended: relative change in the objective value 
 over the last OPTIONS.MaxStallIterations iterations is less than OPTIONS.FunctionTolerance.
-{Undefined function or variable 'ps_arm_sim'.
-
-Error in ps_script (line 16)
-[~,out] = ps_arm_sim(x,animate);
-
-Error in run (line 91)
-evalin('caller', strcat(script, ';'));
-} 
