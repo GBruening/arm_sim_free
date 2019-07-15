@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --nodes=1
-#SBATCH --ntasks=20
-#SBATCH --time=01:00:00
+#SBATCH --ntasks=22
+#SBATCH --time=10:00:00
 #SBATCH --array=1 #-9
 #SBATCH --partition=shas
 #SBATCH --job-name=ps_arm_model

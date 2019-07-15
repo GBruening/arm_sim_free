@@ -1,6 +1,7 @@
-function [error,out] = ga_arm_sim(x,animate)
-x = x*1e-6;
-x = reshape(x,[18,8]);
+% function [error,out] = ga_arm_sim(animate)
+animate  = 1;
+% x = x*1e-6;
+% x = reshape(x,[18,8]);
 format long
 time = 0;
 
@@ -58,8 +59,8 @@ shoulder.torque_c = [];
 if animate
     figure(1);
 end
-while time<3
-    [theta, muscles] = drive_to_theta(act,...
+while time<10
+    [theta, muscles, shoulder, elbow] = drive_to_theta(act,...
                            muscles,...
                            theta,...
                            forearm,...
@@ -70,7 +71,9 @@ while time<3
                        
     [muscles] = calc_muscle_l_v(theta, muscles);
     
-    u = [u;calc_u(theta,muscles,x)];
+%     u = [u;calc_u(theta,muscles,shoulder,elbow)];
+%     u = [u;betarnd(5,5,[1,8])];
+    u = [u;rand(1,8)];
     
     act = calc_act(u(end,:),act,muscles,vars);
     
@@ -116,6 +119,6 @@ end
 out.pos_error = pos_error;
 out.force_tot = force_tot;
 
-error = pos_error;
+error = pos_error*100000 + force_tot*0.0001;
 
 % animate_position;
