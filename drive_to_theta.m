@@ -1,5 +1,5 @@
 %% Drive to theta
-function [theta, muscles] = drive_to_theta(act,...
+function [theta, muscles, shoulder, elbow] = drive_to_theta(act,...
                                            muscles,...
                                            theta,...
                                            forearm,...
@@ -16,9 +16,9 @@ for k = 1:length(muscle_nums)
     norm_length(k) = muscles.(muscle_nums{k}).length(end)/muscles.(muscle_nums{k}).l0;
     vel(k) = muscles.(muscle_nums{k}).v(end);
     
-    a = act.(muscle_nums{k})(end);
+    a(k) = act.(muscle_nums{k})(end);
 
-    stress(k) = Fl_Fv_for(norm_length(k),vel(k),a)*norm_force;
+    stress(k) = Fl_Fv_for(norm_length(k),vel(k),a(k))*norm_force;
     force(k) = stress(k)*muscles.(muscle_nums{k}).pcsa;
     
     muscles.(muscle_nums{k}).force = ...
@@ -94,8 +94,10 @@ theta.Ed = [theta.Ed, theta.Ed(end) + theta.Edd(end)*vars.time_inc];
 e_s = theta.S(end) + theta.Sd(end)*vars.time_inc;
 if e_s < deg2rad(-45)
     theta.S = [theta.S, deg2rad(-45)];
+    theta.Sd(end) = 0;
 elseif e_s > deg2rad(135)
     theta.S = [theta.S, deg2rad(135)];
+    theta.Sd(end) = 0;
 else
     theta.S = [theta.S, theta.S(end) + theta.Sd(end)*vars.time_inc];
 end
@@ -103,14 +105,25 @@ end
 e_f = theta.E(end) + theta.Ed(end)*vars.time_inc;
 if e_f < deg2rad(3)
     theta.E = [theta.E, deg2rad(3)];
+    theta.Ed(end) = 0;
 elseif e_f > deg2rad(177)
     theta.E = [theta.E, deg2rad(177)];
+    theta.Ed(end) = 0;
 else
     theta.E = [theta.E, theta.E(end) + theta.Ed(end)*vars.time_inc];
 end
-if ~isreal(theta.E(end))
+
+if isnan(theta.E(end))
     1;
 end
-    
 
+if abs(theta.Ed(end))>10000
+    muscle_nums = {'an','bs','br','da','dp','pc','bb','tb'};
+    figure(1);clf(1);hold on
+    for k=1:8
+        plot(act.(muscle_nums{k}),'LineWidth',2.5);
+    end
+    legend(muscle_nums);
+    1;
+end
 end
