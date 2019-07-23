@@ -60,7 +60,7 @@ if animate
     figure(1);
 end
 count = 0;
-while time<1
+while time<20
     count = count + 1;
     [theta, muscles, shoulder, elbow] = drive_to_theta(act,...
                            muscles,...
@@ -123,7 +123,7 @@ ax = gca;
 legend(muscle_nums);
 xlabel('Time');
 ylabel('Activation State');
-xticklabels({ax.XTick*vars.time_inc});
+xticklabels({ax.X
 
 subplot(2,3,6);
 hold on
@@ -133,7 +133,6 @@ end
 legend(muscle_nums);
 xlabel('Time');
 ylabel('Neural Drive');
-xticklabels({ax.XTick*vars.time_inc});
 
 subplot(2,3,[1,4]);
 hold on
@@ -142,7 +141,6 @@ plot(elbow.torque_c);
 legend({'Shoulder','Elbow'});
 xlabel('Time');
 ylabel('Joint Torque');
-xticklabels({ax.XTick*vars.time_inc});
 
 subplot(2,3,[2,5]);
 hold on
@@ -151,7 +149,6 @@ plot(theta.E);
 legend({'Shoulder','Elbow'});
 xlabel('Time');
 ylabel('Position');
-xticklabels({ax.XTick*vars.time_inc});
 
 
 
