@@ -1,7 +1,6 @@
-% function [error,out] = ga_arm_sim(animate)
-animate  = 1;
+function [error,out] = optim_arm_sim(x,animate)
 % x = x*1e-6;
-% x = reshape(x,[18,8]);
+x = reshape(x,[18,8]);
 format long
 time = 0;
 
@@ -60,9 +59,9 @@ if animate
     figure(1);
 end
 count = 0;
-while time<20
+while time<3
     count = count + 1;
-    [theta, muscles, shoulder, elbow] = drive_to_theta(act,...
+    [theta, muscles] = drive_to_theta(act,...
                            muscles,...
                            theta,...
                            forearm,...
@@ -73,14 +72,15 @@ while time<20
                        
     [muscles] = calc_muscle_l_v(theta, muscles);
     
-    if exist('act','var')
-        u = [u;calc_u(u,act,count, shoulder, elbow, theta)];
-    else
-        u = [u;calc_u(u,[],count, shoulder, elbow, theta)];
-    end
-%     u = [u;betarnd(5,5,[1,8])];
-%     u = [u;rand(1,8)];
-    
+%     u = [u;calc_u_simple(theta,muscles,x)];
+    u = [u,calc_u_thetarandom(theta,muscles,shoulder,elbow)];
+
+%     if exist('act','var')
+%         u = [u;calc_u_forcing(u,act,count, shoulder, elbow, theta)];
+%     else
+%         u = [u;calc_u_forcing(u,[],count, shoulder, elbow, theta)];
+%     end
+
     act = calc_act(u(end,:),act,muscles,vars);
     
     pos = calc_endpos(theta, forearm, upperarm, pos);
@@ -89,7 +89,7 @@ while time<20
     
     if animate
         % Animating it
-        figure(1);clf(1);hold on;
+        clf(1);hold on;
         xlim([.6*(-upperarm.length-forearm.length) .5*(upperarm.length+forearm.length)]);
         ylim([-0.1 upperarm.length+forearm.length]);
         x1 = upperarm.length * cos(theta.S(end));
@@ -104,7 +104,6 @@ while time<20
         plot([0,x1],[0,y1], 'color', 'blue');
         plot([x1,x2],[y1,y2], 'color', 'blue');
         drawnow;
-        
     end
 
     if sqrt((pos.x(end)-rf(1))^2+(pos.y(end)-rf(2))^2)<1e-5 &&...
@@ -112,47 +111,6 @@ while time<20
         break
     end
 end
-
-figure(6);clf(6);
-subplot(2,3,3);
-hold on
-for k = 1:8
-    plot(act.(muscle_nums{k}));
-end
-ax = gca;
-legend(muscle_nums);
-xlabel('Time');
-ylabel('Activation State');
-xticklabels({ax.X
-
-subplot(2,3,6);
-hold on
-for k = 1:8
-    plot(u(:,k));
-end
-legend(muscle_nums);
-xlabel('Time');
-ylabel('Neural Drive');
-
-subplot(2,3,[1,4]);
-hold on
-plot(shoulder.torque_c);
-plot(elbow.torque_c);
-legend({'Shoulder','Elbow'});
-xlabel('Time');
-ylabel('Joint Torque');
-
-subplot(2,3,[2,5]);
-hold on
-plot(theta.S);
-plot(theta.E);
-legend({'Shoulder','Elbow'});
-xlabel('Time');
-ylabel('Position');
-
-
-
-
 out.pos     = pos;
 out.muscles = muscles;
 out.theta   = theta;

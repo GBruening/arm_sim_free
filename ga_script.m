@@ -1,7 +1,9 @@
-
-mycluster=parcluster('local');
-mycluster.NumWorkers=num_workers;
-parpool(num_workers);
+% if ~exist('num_workers','var')
+%     num_workers = 6;
+% end
+% mycluster=parcluster('local');
+% mycluster.NumWorkers=num_workers;
+% parpool(num_workers);
 
 lb = zeros(18*8,1);
 ub = lb + 10;

@@ -1,4 +1,4 @@
-function [u] = calc_u(u_in, act, count, shoulder, elbow, theta)
+function [u] = calc_u_forcing(u_in, act, count, shoulder, elbow, theta)
     
     muscle_nums = {'an','bs','br','da','dp','pc','bb','tb'};
     
@@ -13,7 +13,7 @@ function [u] = calc_u(u_in, act, count, shoulder, elbow, theta)
 %     end
 %     u = in*m;
     if exist('act','var')
-        if mod(count,50)==1
+        if mod(count,200)==1
             for k = 1:8
                 h = [];
                 for x = 0:.01:1
@@ -66,42 +66,95 @@ function [u] = calc_u(u_in, act, count, shoulder, elbow, theta)
                     u(k) = 1;
                 end
             end
+        elseif mod(count,25)==1
+            scaler = 1;
+            for k = 1:8
+                u(k) = u_in(end,k)+((rand-.5)/100);
+                if u(k)<0
+                   u(k)=0;
+                end
+            end
+            if elbow.torque_c(end)>0
+                u(1) = (1-u(1))/scaler+u(1);
+                u(2) = u(2)/(1+elbow.torque_c(end)/scaler+rand/scaler);
+                u(3) = u(3)/(1+elbow.torque_c(end)/scaler+rand/scaler);
+                u(7) = u(7)/(1+elbow.torque_c(end)/scaler+rand/scaler);
+            else
+                u(1) = u(1)/(1-elbow.torque_c(end)/10+rand/10);
+                u(2) = (1-u(2))/scaler+u(2);
+                u(3) = (1-u(3))/scaler+u(3);
+            end
+            if shoulder.torque_c(end)>0
+                u(5) = (1-u(5))*.1+u(5);
+                u(4) = u(4)/(1+shoulder.torque_c(end)*5/scaler+rand/scaler);
+                u(6) = u(6)/(1+shoulder.torque_c(end)*5/scaler+rand/scaler);
+            else
+                u(4) = (1-u(4))/scaler+u(4);
+                u(6) = (1-u(6))/scaler+u(6);
+                u(5) = u(5)/(1-shoulder.torque_c(end)/scaler+rand/scaler);
+            end
+            if shoulder.torque_c(end)>0 && elbow.torque_c(end)>0
+                u(8) = (1-u(8))*.01+u(8);
+                u(7) = u(7)/(1+rand/100);
+            elseif shoulder.torque_c(end)<0 && elbow.torque_c(end)<0
+                u(7) = (1-u(7))*.01+u(7);
+                u(8) = u(8)/(1+rand/100);
+            end
+            for k = 1:8
+                if u(k)<0
+                   u(k)=0;
+                elseif u(k)>1
+                    u(k) = 1;
+                end
+            end
+        elseif mod(count,5)==1
+            scaler = 5;
+            for k = 1:8
+                u(k) = u_in(end,k)+((rand-.5)/100);
+                if u(k)<0
+                   u(k)=0;
+                end
+            end
+            if elbow.torque_c(end)>0
+                u(1) = (1-u(1))/scaler+u(1);
+                u(2) = u(2)/(1+elbow.torque_c(end)/scaler+rand/scaler);
+                u(3) = u(3)/(1+elbow.torque_c(end)/scaler+rand/scaler);
+                u(7) = u(7)/(1+elbow.torque_c(end)/scaler+rand/scaler);
+            else
+                u(1) = u(1)/(1-elbow.torque_c(end)/10+rand/10);
+                u(2) = (1-u(2))/scaler+u(2);
+                u(3) = (1-u(3))/scaler+u(3);
+            end
+            if shoulder.torque_c(end)>0
+                u(5) = (1-u(5))*.1+u(5);
+                u(4) = u(4)/(1+shoulder.torque_c(end)*5/scaler+rand/scaler);
+                u(6) = u(6)/(1+shoulder.torque_c(end)*5/scaler+rand/scaler);
+            else
+                u(4) = (1-u(4))/scaler+u(4);
+                u(6) = (1-u(6))/scaler+u(6);
+                u(5) = u(5)/(1-shoulder.torque_c(end)/scaler+rand/scaler);
+            end
+            if shoulder.torque_c(end)>0 && elbow.torque_c(end)>0
+                u(8) = (1-u(8))*.01+u(8);
+                u(7) = u(7)/(1+rand/100);
+            elseif shoulder.torque_c(end)<0 && elbow.torque_c(end)<0
+                u(7) = (1-u(7))*.01+u(7);
+                u(8) = u(8)/(1+rand/100);
+            end
+            for k = 1:8
+                if u(k)<0
+                   u(k)=0;
+                elseif u(k)>1
+                    u(k) = 1;
+                end
+            end
         else
-            1;
             for k = 1:8
                 u(k) = u_in(end,k)+((rand-.5)/10);
                 if u(k)<0
                    u(k)=0;
                 end
             end
-            
-            if elbow.torque_c(end)>0
-                u(1) = (1-u(1))*.3+u(1);
-                u(2) = u(2)/(1+rand/5);
-                u(3) = u(3)/(1+rand/5);
-                u(7) = u(7)/(1+rand/5);
-            else
-                u(1) = u(1)/(1+rand/5);
-                u(2) = (1-u(2))*.1+u(2);
-                u(3) = (1-u(3))*.1+u(3);
-            end
-            if shoulder.torque_c(end)>0
-                u(5) = (1-u(5))*.4+u(5);
-                u(4) = u(4)/(2+rand/5);
-                u(6) = u(6)/(2+rand/5);
-            else
-                u(4) = (1-u(4))*.1+u(4);
-                u(6) = (1-u(6))*.1+u(6);
-                u(5) = u(5)/(1+rand/5);
-            end
-            if shoulder.torque_c(end)>0 && elbow.torque_c(end)>0
-                u(8) = (1-u(8))*.1+u(8);
-                u(7) = u(7)/(1+rand/5);
-            elseif shoulder.torque_c(end)<0 && elbow.torque_c(end)<0
-                u(7) = (1-u(7))*.1+u(7);
-                u(8) = u(8)/(1+rand/5);
-            end
-            
             for k = 1:8
                 if u(k)<0
                    u(k)=0;

@@ -1,4 +1,4 @@
-function [u] = calc_u(theta,muscles,shoulder,elbow)
+function [u] = calc_u_thetarandom(theta,muscles,shoulder,elbow)
     
     muscle_nums = {'an','bs','br','da','dp','pc','bb','tb'};
     
