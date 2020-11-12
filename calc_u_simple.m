@@ -1,4 +1,4 @@
-function [u] = calc_u(theta,muscles,m)
+function [u] = calc_u_simple(theta,muscles,m)
     
     muscle_nums = {'an','bs','br','da','dp','pc','bb','tb'};
     

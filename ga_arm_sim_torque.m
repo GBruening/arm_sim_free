@@ -1,12 +1,9 @@
-% function [error,out] = ga_arm_sim(animate)
-animate  = 1;
+function [error,out] = ga_arm_sim_torque(x,size1,animate)
 % x = x*1e-6;
 % x = reshape(x,[18,8]);
+x = reshape(x,[size1,2]);
 format long
-<<<<<<< HEAD
-=======
 time = 0;
->>>>>>> master
 
 input.added_mass  = 0;
 input.subj_mass   = 60; % in kg
@@ -19,7 +16,7 @@ input.tar_rel_pos = [0.0707, 0.0707]; % Relative Target position in m
 % Initialize some variables. 
 vars.masses = input.added_mass;
 vars.rnjesus = 0;
-vars.time_inc = 0.0050;
+vars.time_inc = 0.05;
 vars.speeds = input.movedur; % Movement Duration
 vars.norm_force = input.normforce;
 vars.minparam = 'drive2';
@@ -53,27 +50,21 @@ rf = [vars.target(1)+ro(1),...
 
 [ theta, pos ] = init_theta(ro(1),ro(2),forearm,upperarm,theta);
 
-[ muscles, act] = calc_muscle_initvars(vars,theta);
-
-u = [];
 elbow.torque_c = [];
 shoulder.torque_c = [];
 
 if animate
     figure(1);
 end
-<<<<<<< HEAD
 count = 0;
-for time = [0:0.005:10]
-    if mod(time,5) <= 1e-4
-        fprintf('T = %g\n',time);
-    end
+while count<size1-1
     count = count + 1;
-=======
-while time<10
->>>>>>> master
-    [theta, muscles, shoulder, elbow] = drive_to_theta(act,...
-                           muscles,...
+    if count>1
+        torque_in = x(end,:);
+    else
+        torque_in = x;
+    end
+    [theta] = torque_to_theta(torque_in,...
                            theta,...
                            forearm,...
                            upperarm,...
@@ -81,43 +72,23 @@ while time<10
                            shoulder,...
                            vars);
                        
-    [muscles] = calc_muscle_l_v(theta, muscles);
-    
-<<<<<<< HEAD
-    if exist('act','var')
-        u = [u;calc_u_forcing(u,act,count, shoulder, elbow, theta)];
-    else
-        u = [u;calc_u_forcing(u,[],count, shoulder, elbow, theta)];
-    end
-%     u = [u;betarnd(5,5,[1,8])];
-%     u = [u;rand(1,8)];
-=======
-%     u = [u;calc_u(theta,muscles,shoulder,elbow)];
-%     u = [u;betarnd(5,5,[1,8])];
-    u = [u;rand(1,8)];
->>>>>>> master
-    
-    act = calc_act(u(end,:),act,muscles,vars);
-    
     pos = calc_endpos(theta, forearm, upperarm, pos);
-<<<<<<< HEAD
-    if mod(time,.005)~= 0
-        1;
-    end
     
-    if animate
-        % Animating it
-        figure(1);clf(1);hold on;
-=======
     
     time = time + vars.time_inc;
     
     if animate
         % Animating it
         clf(1);hold on;
->>>>>>> master
         xlim([.6*(-upperarm.length-forearm.length) .5*(upperarm.length+forearm.length)]);
         ylim([-0.1 upperarm.length+forearm.length]);
+        
+        plot(input.start_pos(1),input.start_pos(2),...
+            'x','MarkerSize',15,'color','red');
+        plot(input.start_pos(1)+input.tar_rel_pos(1),...
+            input.start_pos(2)+input.tar_rel_pos(2),...
+            'o','MarkerSize',15,'color','green');
+        
         x1 = upperarm.length * cos(theta.S(end));
 
         y1 = upperarm.length * sin(theta.S(end));
@@ -130,10 +101,6 @@ while time<10
         plot([0,x1],[0,y1], 'color', 'blue');
         plot([x1,x2],[y1,y2], 'color', 'blue');
         drawnow;
-<<<<<<< HEAD
-        
-=======
->>>>>>> master
     end
 
     if sqrt((pos.x(end)-rf(1))^2+(pos.y(end)-rf(2))^2)<1e-5 &&...
@@ -141,65 +108,22 @@ while time<10
         break
     end
 end
-<<<<<<< HEAD
-
-muscle_nums = {'an','bs','br','da','dp','pc','bb','tb'};
-figure(6);clf(6);
-subplot(2,3,3);
-hold on
-for k = 1:8
-    plot(act.(muscle_nums{k}));
-end
-ax = gca;
-legend(muscle_nums);
-xlabel('Time');
-ylabel('Activation State');
-xticklabels({ax.XTick*vars.time_inc});
-
-subplot(2,3,6);
-hold on
-for k = 1:8
-    plot(u(:,k));
-end
-legend(muscle_nums);
-xlabel('Time');
-ylabel('Neural Drive');
-xticklabels({ax.XTick*vars.time_inc});
-
-subplot(2,3,[1,4]);
-hold on
-plot(shoulder.torque_c);
-plot(elbow.torque_c);
-legend({'Shoulder','Elbow'});
-xlabel('Time');
-ylabel('Joint Torque');
-xticklabels({ax.XTick*vars.time_inc});
-
-subplot(2,3,[2,5]);
-hold on
-plot(theta.S);
-plot(theta.E);
-legend({'Shoulder','Elbow'});
-xlabel('Time');
-ylabel('Position');
-xticklabels({ax.XTick*vars.time_inc});
-
-=======
->>>>>>> master
 out.pos     = pos;
-out.muscles = muscles;
+% out.muscles = muscles;
 out.theta   = theta;
 
 pos_error = sqrt((pos.x(end)-rf(1))^2+(pos.y(end)-rf(2))^2);
 
 muscle_nums = {'an','bs','br','da','dp','pc','bb','tb'};
-force_tot = 0;
-for k = 1:8
-   force_tot = force_tot + sum(out.muscles.(muscle_nums{k}).force); 
-end
+% force_tot = 0;
+% for k = 1:8
+%    force_tot = force_tot + sum(out.muscles.(muscle_nums{k}).force); 
+% end
 out.pos_error = pos_error;
-out.force_tot = force_tot;
+% out.force_tot = force_tot;
+torque_tot = sum(x(:,1).^2)+sum(x(:,2).^2);
+out.force_tot = torque_tot;
 
-error = pos_error*100000 + force_tot*0.0001;
+error = (pos_error+1)^10 + (torque_tot+1)^2;
 
 % animate_position;

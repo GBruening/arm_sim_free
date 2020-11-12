@@ -1,6 +1,7 @@
-function [error,out] = ga_arm_sim(x,animate)
-x = x*1e-6;
-x = reshape(x,[18,8]);
+function [error,out] = ga_arm_sim(x,size,animate)
+% x = x*1e-6;
+% x = reshape(x,[18,8]);
+x = reshape(x,[size,8]);
 format long
 time = 0;
 
@@ -15,7 +16,7 @@ input.tar_rel_pos = [0.0707, 0.0707]; % Relative Target position in m
 % Initialize some variables. 
 vars.masses = input.added_mass;
 vars.rnjesus = 0;
-vars.time_inc = 0.0050;
+vars.time_inc = 0.05;
 vars.speeds = input.movedur; % Movement Duration
 vars.norm_force = input.normforce;
 vars.minparam = 'drive2';
@@ -58,7 +59,9 @@ shoulder.torque_c = [];
 if animate
     figure(1);
 end
-while time<3
+count = 0;
+while count<size-1
+    count = count + 1;
     [theta, muscles] = drive_to_theta(act,...
                            muscles,...
                            theta,...
@@ -70,9 +73,20 @@ while time<3
                        
     [muscles] = calc_muscle_l_v(theta, muscles);
     
-    u = [u;calc_u(theta,muscles,x)];
-    
-    act = calc_act(u(end,:),act,muscles,vars);
+%     u = [u;calc_u_simple(theta,muscles,x)];
+    u = [u;x(count,:)];
+%     u = [u,calc_u_thetarandom(theta,muscles,shoulder,elbow)];
+
+%     if exist('act','var')
+%         u = [u;calc_u_forcing(u,act,count, shoulder, elbow, theta)];
+%     else
+%         u = [u;calc_u_forcing(u,[],count, shoulder, elbow, theta)];
+%     end
+    if count > 1
+        act = calc_act(u(count,:),act,muscles,vars);
+    else
+        act = calc_act(u(:),act,muscles,vars);
+    end
     
     pos = calc_endpos(theta, forearm, upperarm, pos);
     
@@ -83,6 +97,13 @@ while time<3
         clf(1);hold on;
         xlim([.6*(-upperarm.length-forearm.length) .5*(upperarm.length+forearm.length)]);
         ylim([-0.1 upperarm.length+forearm.length]);
+        
+        plot(input.start_pos(1),input.start_pos(2),...
+            'x','MarkerSize',15,'color','red');
+        plot(input.start_pos(1)+input.tar_rel_pos(1),...
+            input.start_pos(2)+input.tar_rel_pos(2),...
+            'o','MarkerSize',15,'color','green');
+        
         x1 = upperarm.length * cos(theta.S(end));
 
         y1 = upperarm.length * sin(theta.S(end));
@@ -116,6 +137,10 @@ end
 out.pos_error = pos_error;
 out.force_tot = force_tot;
 
+<<<<<<< HEAD
+error = pos_error*100 + force_tot;
+=======
 error = pos_error;
+>>>>>>> master
 
 % animate_position;
