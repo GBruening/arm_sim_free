@@ -137,6 +137,10 @@ end
 out.pos_error = pos_error;
 out.force_tot = force_tot;
 
+<<<<<<< HEAD
 error = pos_error*100 + force_tot;
+=======
+error = pos_error;
+>>>>>>> master
 
 % animate_position;

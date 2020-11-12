@@ -2,8 +2,12 @@
 
 #SBATCH --nodes=1
 #SBATCH --ntasks=22
+<<<<<<< HEAD:sim_ga_bash.sho
 #SBATCH --time=120:00:00
 #SBATCH --qos=long
+=======
+#SBATCH --time=10:00:00
+>>>>>>> master:ps_arm_model.sh
 #SBATCH --array=1 #-9
 #SBATCH --partition=shas
 #SBATCH --job-name=sim_ga
